@@ -1,0 +1,5 @@
+[workspace]
+members = [
+    "despicable-socks5",
+    "despicable-proxy-cli"
+]
