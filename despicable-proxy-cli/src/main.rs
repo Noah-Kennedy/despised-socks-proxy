@@ -1,5 +1,5 @@
 use std::net::{IpAddr, SocketAddr};
-use despicable_socks5::server::{Socks5Server, Socks5ServerConfig};
+use despicable_socks5::tokio_server::{Socks5Server, Socks5ServerConfig};
 
 use clap::Parser;
 
