@@ -10,6 +10,7 @@ despicable-socks5 = { path = "../despicable-socks5" }
 anyhow = "1.0.56"
 tracing-subscriber = "0.3.10"
 tracing = "0.1.32"
+either = "1.6.1"
 
 [dependencies.clap]
 version = "3.1.8"
@@ -17,4 +18,4 @@ features = ["derive"]
 
 [dependencies.tokio]
 version = "1.17.0"
-features = ["macros", "rt"]
+features = ["macros", "rt", "io-util", "net"]

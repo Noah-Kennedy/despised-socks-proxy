@@ -41,9 +41,9 @@ where
     B: AsRef<[u8]>,
 {
     #[inline]
-    pub fn verify(&self) -> bool {
+    pub fn is_done(&self) -> bool {
         let slice = self.0.as_ref();
-        slice.len() >= 2 && slice.len() - 2 == slice[1] as usize
+        slice.len() >= 2 && slice.len() - 2 >= slice[1] as usize
     }
     #[inline]
     pub fn version(&self) -> &u8 {
@@ -150,6 +150,31 @@ impl<B> Connection<B>
 where
     B: AsRef<[u8]>,
 {
+    #[inline]
+    pub fn is_done(&self) -> bool {
+        if self.0.as_ref().len() > 8 {
+            let atyp = *self.atyp();
+
+            let addr = self.addr();
+
+            match atyp {
+                ATYP_V4 => addr.len() >= 4,
+                ATYP_V6 => addr.len() >= 16,
+                ATYP_DOMAIN => {
+                    if addr.len() > 0 {
+                        let nlen = addr[0];
+
+                        addr.len() > nlen as usize
+                    } else {
+                        false
+                    }
+                }
+                _ => unimplemented!()
+            }
+        } else {
+            false
+        }
+    }
     #[inline]
     pub fn version(&self) -> &u8 {
         &self.0.as_ref()[0]
